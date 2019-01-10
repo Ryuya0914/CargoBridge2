@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleDirector : MonoBehaviour {
 
@@ -13,4 +14,9 @@ public class TitleDirector : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void ON()
+    {
+        SceneManager.LoadScene("SelectScene");
+    }
 }
