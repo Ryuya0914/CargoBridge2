@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TitleDirector : MonoBehaviour {
+public class SelectDirector : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -15,8 +15,13 @@ public class TitleDirector : MonoBehaviour {
 		
 	}
 
-    public void ON()
+    public void back()
     {
-        SceneManager.LoadScene("SelectScene");
+        SceneManager.LoadScene("TitleScene");
+    }
+
+    public void select()
+    {
+        SceneManager.LoadScene("CreateScene");
     }
 }
