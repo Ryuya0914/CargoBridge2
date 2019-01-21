@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CreateDirector : MonoBehaviour {
-    static public int cost = 300;
+    static public int cost = 10000;
     static public int state = 1;   //0 プレイシーン、　1 始点決定前、　2 始点決定後
     static public int buildState = 0; //0 wolk, 1 wood
     public GameObject[] BridgePrefab; //橋のプレファブ
