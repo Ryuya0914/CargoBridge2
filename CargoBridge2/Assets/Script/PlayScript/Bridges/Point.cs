@@ -16,7 +16,6 @@ public class Point : MonoBehaviour {
     }
 
     public void ConnectionBridge(GameObject obj) {
-        Debug.Log(obj.gameObject.name);
         Joints[Count].connectedBody = obj.GetComponent<Rigidbody2D>();
         Count++;
         Bridges.Add(obj);
