@@ -55,5 +55,6 @@ public class Bridge_Base : MonoBehaviour {
 
     public void Cargo() {
         CreateDirector.cost -= (int)(length * cost);
+        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
 }

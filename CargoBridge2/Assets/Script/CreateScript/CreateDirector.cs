@@ -2,22 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+//TitleからstateName, cost
+//Play のとき start()にloadPrefab("00")
 
 public class CreateDirector : MonoBehaviour {
-    static public int cost = 300;
-    static public int state = 1;   //0 プレイシーン、　1 始点決定前、　2 始点決定後
+    static public int cost = 10000;
+    static public string stageName = "01";
+    static public int state = 10;   //0 プレイシーン、　1 始点決定前、　2 始点決定後  10：タイトルシーン
     static public int buildState = 0; //0 wolk, 1 wood
     public GameObject[] BridgePrefab; //橋のプレファブ
     public GameObject pointPrefab; //pointのプレファブ
     GameObject point1 = null, point2 = null, bridge = null; //選択中のpointと橋
     Vector2 MousePos;
     public GameObject subPoint;
-
+    GameObject Stage;
     GameObject costLabel;
 
     void Start() {
+        Stage = GetComponent<PrefabController>().loadPrefab("00");
+        if (state == 10) {
+            GameObject obj2 = GetComponent<PrefabController>().loadPrefab(stageName);
+            obj2.transform.parent = Stage.transform;
+        }
+        state = 1;
         costLabel = GameObject.Find("Cost");
         UICon();
+        subPoint.transform.parent = Stage.transform;
     }
 
     void Update() {
@@ -36,7 +48,7 @@ public class CreateDirector : MonoBehaviour {
     public void Click(GameObject obj) {
         if (state == 1) {
             point1 = obj;
-            bridge = Instantiate(BridgePrefab[buildState]);
+            bridge = Instantiate(BridgePrefab[buildState], Stage.transform);
             state = 2;
 
         } else if (state == 2) {
@@ -55,7 +67,7 @@ public class CreateDirector : MonoBehaviour {
                         Reset();
                     } else {
                         point2 = subPoint;
-                        subPoint = Instantiate(pointPrefab);
+                        subPoint = Instantiate(pointPrefab, Stage.transform);
                         subPoint.transform.position = new Vector2(10, 0);
                         point2.transform.position = pointPos;
 
@@ -128,9 +140,25 @@ public class CreateDirector : MonoBehaviour {
         return false;
     }
 
-
     //UI変更
     void UICon() {
         costLabel.GetComponent<Text>().text = "cost : " + cost.ToString("D4"); 
     }
+
+    //シーン変更
+    public void GoOtherScene(string nextSceneName) {
+        if (nextSceneName == "PlayScene") {
+            state = 0;
+        } else if (nextSceneName == "TitleScene" || nextSceneName == "SelectScene" || nextSceneName == "CreateScene") {
+            state = 10;
+            Stage.transform.DetachChildren();
+        }
+        GetComponent<PrefabController>().savePrefab(Stage);
+        SceneManager.LoadScene(nextSceneName);
+    }
+    static public void cameTitleScene(int stagecost, string stagename) {
+        cost = stagecost;
+        stageName = stagename;
+    }
+
 }
