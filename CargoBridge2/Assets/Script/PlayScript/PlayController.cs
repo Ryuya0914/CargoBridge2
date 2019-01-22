@@ -9,7 +9,7 @@ public class PlayController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("a");
+       
 
         if (Input.GetMouseButtonDown(0))
         {

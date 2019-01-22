@@ -3,27 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Cargo : MonoBehaviour {
-
-    public GameObject player;
-    Vector2 playerPos;
-    Rigidbody2D rb;
-        
-
-	// Use this for initialization
-	void Start () {
-        //GetComponent<CircleCollider2D>().enabled = false;
-        rb = GetComponent<Rigidbody2D>();
-        //rb.isKinematic = true;
-
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        playerPos = player.transform.position;
-        if (playerPos.x > (transform.position.x+0.9))
+    bool hit = true;
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (hit&&col.gameObject.tag == "player" )
         {
-            GetComponent<CircleCollider2D>().enabled = true;
-            //rb.isKinematic = false;
+            Debug.Log("hit");
+
+            //if(col.gameObject.GetComponent<DistanceJoint2D>().enabled==false)
+            //{
+            //    col.gameObject.GetComponent<DistanceJoint2D>().enabled = true;
+            //    col.gameObject.GetComponent<DistanceJoint2D>().connectedBody = transform.parent.GetComponent<Rigidbody2D>();
+            //}
+            if (col.gameObject.GetComponent<HingeJoint2D>().enabled == false)
+            {
+                col.gameObject.GetComponent<HingeJoint2D>().enabled = true;
+                col.gameObject.GetComponent<HingeJoint2D>().connectedBody = transform.parent.GetComponent<Rigidbody2D>();
+            }
+
         }
-	}
+    }
 }
