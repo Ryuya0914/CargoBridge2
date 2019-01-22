@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     bool move;
     //目的地
     Vector2 vec;
+    Rigidbody2D rid;
     public GameObject fruit;      
     public GameObject house;       
     Vector2 fruitPos;              
@@ -21,12 +22,14 @@ public class Player : MonoBehaviour {
        
         fruitPos = fruit.transform.position;
         housePos = house.transform.position;
+        rid = GetComponent<Rigidbody2D>();
         move = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         MoveController();
+        Debug.Log(rid.velocity.magnitude);
 	}
     public void MoveController()
     {
@@ -44,6 +47,7 @@ public class Player : MonoBehaviour {
                     speed = 2;
                     vec = fruitPos;
                     count = 1;
+                    rid.velocity = Vector3.forward * 0.1f;
                 }
                 if (Input.GetMouseButtonDown(0))  //左
                 {
@@ -68,10 +72,7 @@ public class Player : MonoBehaviour {
                 }
             }
 
-        }
-        Debug.Log(count);
-        Debug.Log(move);
-        Debug.Log(speed);
+        }     
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(vec.x+1, vec.y),
             speed * Time.deltaTime);
 
@@ -80,9 +81,8 @@ public class Player : MonoBehaviour {
             transform.rotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
             speed = 0;
             move = false;
+
         }
     }
-
-
 
 }
