@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bee : MonoBehaviour {
+    void OnTriggerEnter2D(Collider2D col)
+    {
+      
+        if(col.gameObject.tag == "player")
+        {
+            Debug.Log("hit");
+            col.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        }
+    }
+
 }

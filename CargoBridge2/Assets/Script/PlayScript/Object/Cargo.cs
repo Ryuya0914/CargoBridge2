@@ -8,7 +8,7 @@ public class Cargo : MonoBehaviour {
     {
         if (hit&&col.gameObject.tag == "player" )
         {
-            Debug.Log("hit");
+          
 
             //if(col.gameObject.GetComponent<DistanceJoint2D>().enabled==false)
             //{
