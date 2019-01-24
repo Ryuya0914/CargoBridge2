@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wood : Bridge_Base {
+public class Wood : MonoBehaviour {
 
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bridge_Base : MonoBehaviour {
+public class Bridge : MonoBehaviour {
     //このオブジェクトのパラメータ
     public float mass = 0;
     public float gravity = 0;
@@ -22,11 +22,8 @@ public class Bridge_Base : MonoBehaviour {
 
     //当たり判定や重力の変更
     public void ObjectModeChange() {
-        //PlaySceneの場合は動くようにする
-        if (CreateDirector.state == 0) {
             gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
             GetComponent<BoxCollider2D>().isTrigger = false;
-        }
     }
 
     //橋の移動

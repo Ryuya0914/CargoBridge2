@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class PlayDirector : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Start() {
+        GetComponent<PrefabController>().loadPrefab("00");
+        Invoke("BridgeStart", 2.0f);
+    }
+
+    void BridgeStart() {
+        GameObject[] bridges = GameObject.FindGameObjectsWithTag("Walk");
+        foreach (GameObject obj in bridges) {
+            obj.GetComponent<Bridge>().ObjectModeChange();
+        }
+        bridges = GameObject.FindGameObjectsWithTag("Wood");
+        foreach (GameObject obj in bridges) {
+            obj.GetComponent<Bridge>().ObjectModeChange();
+        }
+    }
 }

@@ -16,8 +16,10 @@ public class Point : MonoBehaviour {
 
     public void ConnectionBridge(GameObject obj) {
         for (int i = 0; i < 7; i++) {
-            if (Joints[i].connectedBody == null) {
+            if (Joints[i].enabled == false) {
+                Joints[i].enabled = true;
                 Joints[i].connectedBody = obj.GetComponent<Rigidbody2D>();
+                Joints[i].breakForce = obj.GetComponent<Bridge>().breakeForce;
                 break;
             }
         }
@@ -26,8 +28,13 @@ public class Point : MonoBehaviour {
     public bool Check() {
         bool nullflag = false;
         bool sameflag = false;
+        
         for (int i = 0; i < 7; i++) {
-            if (Joints[i].connectedBody == null) nullflag = true;
+            if (Joints[i].enabled == true && Joints[i].connectedBody == null) Joints[i].enabled = false;
+        }
+        
+        for (int i = 0; i < 7; i++) {
+            if (Joints[i].enabled == false) nullflag = true;
         }
         if (nullflag && !sameflag) return true;
         return false;

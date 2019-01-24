@@ -92,19 +92,7 @@ public class CreateDirector : MonoBehaviour {
 
     //橋をpointに固定する
     void Connection() {
-        switch (buildState) {
-            case 0:
-                bridge.GetComponent<Walk>().Cargo(point1, point2);
-                break;
-            case 1:
-                bridge.GetComponent<Wood>().Cargo(point1, point2);
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-        }
-
+        bridge.GetComponent<Bridge>().Cargo(point1, point2);
         point1.GetComponent<Point>().ConnectionBridge(bridge);
         point2.GetComponent<Point>().ConnectionBridge(bridge);
         Reset();
@@ -113,35 +101,12 @@ public class CreateDirector : MonoBehaviour {
     
     //橋の位置を動かす
     Vector2 MoveBridge() {
-        Vector2 bridgePos = new Vector2();
-        switch (buildState) {
-            case 0:
-                bridgePos = bridge.GetComponent<Walk>().Move(point1.transform.position, MousePos);
-                break;
-            case 1:
-                bridgePos = bridge.GetComponent<Wood>().Move(point1.transform.position, MousePos);
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-        }
-        return bridgePos;
+        return bridge.GetComponent<Bridge>().Move(point1.transform.position, MousePos);
     }
 
     //橋の長さチェック
     bool MoveCheck(GameObject obj2) {
-        switch (buildState) {
-            case 0:
-                return bridge.GetComponent<Walk>().MoveCheck(point1.transform.position, obj2.transform.position);
-            case 1:
-                return bridge.GetComponent<Wood>().MoveCheck(point1.transform.position, obj2.transform.position);
-            case 2:
-                break;
-            case 3:
-                break;
-        }
-        return false;
+        return bridge.GetComponent<Bridge>().MoveCheck(point1.transform.position, obj2.transform.position);
     }
 
     //UI変更

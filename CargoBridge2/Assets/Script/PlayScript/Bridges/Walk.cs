@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Walk : Bridge_Base {
+public class Walk : MonoBehaviour {
 
 }
