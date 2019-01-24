@@ -9,6 +9,7 @@ TagManager:
   - Walk
   - Wood
   - player
+  - fruit
   layers:
   - Default
   - TransparentFX
