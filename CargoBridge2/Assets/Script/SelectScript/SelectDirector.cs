@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SelectDirector : MonoBehaviour {
+    string[] stage = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10" };
+    int[] cost = { 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000 };
 
 	// Use this for initialization
 	void Start () {
@@ -20,8 +22,9 @@ public class SelectDirector : MonoBehaviour {
         SceneManager.LoadScene("TitleScene");
     }
 
-    public void select()
+    public void select(int a)
     {
+        CreateDirector.cameTitleScene(cost[a], stage[a]);
         SceneManager.LoadScene("CreateScene");
     }
 }
