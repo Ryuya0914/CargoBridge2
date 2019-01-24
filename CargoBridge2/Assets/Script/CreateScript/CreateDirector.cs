@@ -156,7 +156,6 @@ public class CreateDirector : MonoBehaviour {
         } else if (nextSceneName == "TitleScene" || nextSceneName == "SelectScene" || nextSceneName == "CreateScene") {
             state = 10;
             Stage.transform.DetachChildren();
-            cost = cost_BackUp;
         }
         GetComponent<PrefabController>().savePrefab(Stage);
         SceneManager.LoadScene(nextSceneName);
