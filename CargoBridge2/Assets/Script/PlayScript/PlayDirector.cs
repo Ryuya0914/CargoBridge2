@@ -5,18 +5,18 @@ using UnityEngine;
 public class PlayDirector : MonoBehaviour {
 
     void Start() {
-        Invoke("BridgeStart", 2.0f);
         GetComponent<PrefabController>().loadPrefab("00");
+        Invoke("BridgeStart", 2.0f);
     }
 
     void BridgeStart() {
         GameObject[] bridges = GameObject.FindGameObjectsWithTag("Walk");
-        for (int i = 0; i < bridges.Length; i++) {
-            bridges[i].GetComponent<Walk>().ObjectModeChange();
+        foreach (GameObject obj in bridges) {
+            obj.GetComponent<Bridge>().ObjectModeChange();
         }
         bridges = GameObject.FindGameObjectsWithTag("Wood");
-        for (int i = 0; i < bridges.Length; i++) {
-            bridges[i].GetComponent<Wood>().ObjectModeChange();
+        foreach (GameObject obj in bridges) {
+            obj.GetComponent<Bridge>().ObjectModeChange();
         }
     }
 }
