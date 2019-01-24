@@ -3,21 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Point : MonoBehaviour {
-    //現在つなげている数
-    public int Count = 0;
-    //接続した橋
-    List<GameObject> Bridges;
+    //現在つなげているpoint
+    public List<GameObject> connectionPoint;
+    
+
     HingeJoint2D[] Joints;
     
 
     void Start() {
-        Bridges = new List<GameObject>();
         Joints = GetComponents<HingeJoint2D>();
     }
 
     public void ConnectionBridge(GameObject obj) {
-        Joints[Count].connectedBody = obj.GetComponent<Rigidbody2D>();
-        Count++;
-        Bridges.Add(obj);
+        for (int i = 0; i < 7; i++) {
+            if (Joints[i].connectedBody == null) {
+                Joints[i].connectedBody = obj.GetComponent<Rigidbody2D>();
+                break;
+            }
+        }
+    }
+
+    public bool Check() {
+        bool nullflag = false;
+        bool sameflag = false;
+        for (int i = 0; i < 7; i++) {
+            if (Joints[i].connectedBody == null) nullflag = true;
+        }
+        if (nullflag && !sameflag) return true;
+        return false;
     }
 }

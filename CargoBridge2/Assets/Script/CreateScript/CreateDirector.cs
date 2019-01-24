@@ -9,9 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class CreateDirector : MonoBehaviour {
     static public int cost = 10000;
+    static public int cost_BackUp = 10000;
     static public string stageName = "01";
     static public int state = 10;   //0 プレイシーン、　1 始点決定前、　2 始点決定後  10：タイトルシーン
-    static public int buildState = 0; //0 wolk, 1 wood
+    static public int buildState = 0; //0 wolk, 1 wood 
     public GameObject[] BridgePrefab; //橋のプレファブ
     public GameObject pointPrefab; //pointのプレファブ
     GameObject point1 = null, point2 = null, bridge = null; //選択中のpointと橋
@@ -47,10 +48,11 @@ public class CreateDirector : MonoBehaviour {
     //pointがクリックされたときにオブジェクトが送られてくる
     public void Click(GameObject obj) {
         if (state == 1) {
-            point1 = obj;
-            bridge = Instantiate(BridgePrefab[buildState], Stage.transform);
-            state = 2;
-
+            if (obj.GetComponent<Point>().Check()) {
+                point1 = obj;
+                bridge = Instantiate(BridgePrefab[buildState], Stage.transform);
+                state = 2;
+            }
         } else if (state == 2) {
 
             if (obj == point1) {        //終点が始点と同じところを指定された時
@@ -58,8 +60,10 @@ public class CreateDirector : MonoBehaviour {
                 Reset();
             } else {                    //終点が違うpointを指定された時
                 if (obj != null && MoveCheck(obj)) {
-                    point2 = obj;
-                    Connection();
+                    if (obj.GetComponent<Point>().Check()) {
+                        point2 = obj;
+                        Connection();
+                    }
                 } else {   //終点がなにもないところを指定された時
                     Vector2 pointPos = MoveBridge();
                     if (pointPos.x >= 20) {
@@ -90,10 +94,10 @@ public class CreateDirector : MonoBehaviour {
     void Connection() {
         switch (buildState) {
             case 0:
-                bridge.GetComponent<Walk>().Cargo();
+                bridge.GetComponent<Walk>().Cargo(point1, point2);
                 break;
             case 1:
-                bridge.GetComponent<Wood>().Cargo();
+                bridge.GetComponent<Wood>().Cargo(point1, point2);
                 break;
             case 2:
                 break;
@@ -141,7 +145,7 @@ public class CreateDirector : MonoBehaviour {
     }
 
     //UI変更
-    void UICon() {
+    public void UICon() {
         costLabel.GetComponent<Text>().text = "cost : " + cost.ToString("D4"); 
     }
 
@@ -152,13 +156,28 @@ public class CreateDirector : MonoBehaviour {
         } else if (nextSceneName == "TitleScene" || nextSceneName == "SelectScene" || nextSceneName == "CreateScene") {
             state = 10;
             Stage.transform.DetachChildren();
+            cost = cost_BackUp;
         }
         GetComponent<PrefabController>().savePrefab(Stage);
         SceneManager.LoadScene(nextSceneName);
     }
     static public void cameTitleScene(int stagecost, string stagename) {
         cost = stagecost;
+        cost_BackUp = cost;
         stageName = stagename;
     }
 
+    //buildState切り替え
+    public void BuildStateChange(int num) {
+        buildState = num;
+        if (state == 2) Destroy(bridge);
+        Reset();
+    }
+
+    //消しゴム機能
+    public void Eraser(GameObject obj) {
+        Destroy(obj);
+         UICon();
+        
+    }
 }

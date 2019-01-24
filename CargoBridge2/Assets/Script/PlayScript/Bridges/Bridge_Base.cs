@@ -10,17 +10,23 @@ public class Bridge_Base : MonoBehaviour {
     public float maxLength = 0;
     public int cost = 0;
     float length = 0;
+    public List<GameObject> connectedPoint;
+    public Color _color;
+    public int haveCost = 0;
 
-    GameObject gameRoot;
+    GameObject createRoot;
 
     void Start() {
-        gameRoot = GameObject.Find("GameRoot");
+        createRoot = GameObject.Find("CreateRoot");
     }
 
     //当たり判定や重力の変更
     public void ObjectModeChange() {
         //PlaySceneの場合は動くようにする
-        if (CreateDirector.state == 0) gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        if (CreateDirector.state == 0) {
+            gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            GetComponent<BoxCollider2D>().isTrigger = false;
+        }
     }
 
     //橋の移動
@@ -35,13 +41,13 @@ public class Bridge_Base : MonoBehaviour {
         length = vec.magnitude;
         length = Mathf.Min(length, maxLength);
         length = Mathf.Min(length, (float)CreateDirector.cost / cost);
-        transform.localScale = new Vector2(0.14f + 0.37f * length, 1);
+        transform.localScale = new Vector2(0.14f + 0.37f * length, 0.8f);
         //位置
         Vector2 pos = new Vector2(8, 8);
         pos.x = startPos.x + length * Mathf.Cos(rad);
         pos.y = startPos.y + length * Mathf.Sin(rad);
         transform.position = (pos + startPos) / 2;
-        if (length <= 0.3f) return new Vector2(20, 20);
+        if (length <= 0.5f) return new Vector2(50, 0);
         else return pos;
     }
 
@@ -53,8 +59,16 @@ public class Bridge_Base : MonoBehaviour {
         return (_length <= maxLength) ? true : false;
     }
 
-    public void Cargo() {
-        CreateDirector.cost -= (int)(length * cost);
-        GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+    public void Cargo(GameObject obj1, GameObject obj2) {
+        connectedPoint.Add(obj1);
+        connectedPoint.Add(obj2);
+        haveCost = (int)(length * cost);
+        CreateDirector.cost -= haveCost;
+        GetComponent<SpriteRenderer>().color = _color;
     }
+
+    void OnDestroy() {
+        CreateDirector.cost += haveCost;
+    }
+
 }
