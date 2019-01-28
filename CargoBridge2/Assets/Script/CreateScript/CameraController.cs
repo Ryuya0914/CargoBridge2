@@ -8,6 +8,10 @@ public class CameraController : MonoBehaviour {
     float Top, Bottom, Right, Left;
 
     void Start() {
+        Invoke("CameraSet", 2.0f);
+    }
+
+    void CameraSet() {
         Top = GameObject.Find("TopRight").transform.position.y - 1;
         Bottom = GameObject.Find("BottomLeft").transform.position.y + 1;
         Right = GameObject.Find("TopRight").transform.position.x - 1;

@@ -24,7 +24,7 @@ public class SelectDirector : MonoBehaviour {
 
     public void select(int a)
     {
-        CreateDirector.cameTitleScene(cost[a], stage[a]);
+        GameDirector.StageSet(cost[a], stage[a]);
         SceneManager.LoadScene("CreateScene");
     }
 }

@@ -9,28 +9,20 @@ using UnityEngine.SceneManagement;
 
 public class CreateDirector : MonoBehaviour {
     static public int cost = 10000;
-    static public int cost_BackUp = 10000;
-    static public string stageName = "01";
-    static public int state = 10;   //0 プレイシーン、　1 始点決定前、　2 始点決定後  10：タイトルシーン
+    static public int state = 0;   //0 始点決定前、　1 始点決定後
     static public int buildState = 0; //0 wolk, 1 wood 
     public GameObject[] BridgePrefab; //橋のプレファブ
     public GameObject pointPrefab; //pointのプレファブ
     GameObject point1 = null, point2 = null, bridge = null; //選択中のpointと橋
     Vector2 MousePos;
     public GameObject subPoint;
-    GameObject Stage;
-    GameObject costLabel;
+    public GameObject Stage;
+    public GameObject costLabel;
 
     void Start() {
-        Stage = GetComponent<PrefabController>().loadPrefab("00");
-        if (state == 10) {
-            GameObject obj2 = GetComponent<PrefabController>().loadPrefab(stageName);
-            obj2.transform.parent = Stage.transform;
-        }
-        state = 1;
-        costLabel = GameObject.Find("Cost");
-        UICon();
-        subPoint.transform.parent = Stage.transform;
+        state = 0;
+        cost = GameDirector.cost;
+        CostLabelUpdate();
     }
 
     void Update() {
@@ -40,20 +32,20 @@ public class CreateDirector : MonoBehaviour {
         MousePos = (Vector2)Camera.main.ScreenToWorldPoint(mousePos3);
 
         //生成前の橋の位置を動かす
-        if (state == 2) {
+        if (state == 1) {
             MoveBridge();
         }
     }
 
     //pointがクリックされたときにオブジェクトが送られてくる
     public void Click(GameObject obj) {
-        if (state == 1) {
+        if (state == 0) {
             if (obj.GetComponent<Point>().Check()) {
                 point1 = obj;
                 bridge = Instantiate(BridgePrefab[buildState], Stage.transform);
-                state = 2;
+                state = 1;
             }
-        } else if (state == 2) {
+        } else if (state == 1) {
 
             if (obj == point1) {        //終点が始点と同じところを指定された時
                 Destroy(bridge);
@@ -71,15 +63,15 @@ public class CreateDirector : MonoBehaviour {
                         Reset();
                     } else {
                         point2 = subPoint;
-                        subPoint = Instantiate(pointPrefab, Stage.transform);
-                        subPoint.transform.position = new Vector2(10, 0);
+                        subPoint = Instantiate(pointPrefab, transform);
+                        subPoint.transform.position = new Vector2(30, 0);
                         point2.transform.position = pointPos;
-
+                        point2.transform.parent = Stage.transform;
                         Connection();
                     }
                 }
             } 
-            UICon();
+            CostLabelUpdate();
         }
     }
 
@@ -87,16 +79,17 @@ public class CreateDirector : MonoBehaviour {
     void Reset() {
         point1 = null;
         point2 = null;
-        state = 1;
+        state = 0;
     }
 
     //橋をpointに固定する
     void Connection() {
+        state = 0;
         bridge.GetComponent<Bridge>().Cargo(point1, point2);
         point1.GetComponent<Point>().ConnectionBridge(bridge);
         point2.GetComponent<Point>().ConnectionBridge(bridge);
         Reset();
-        UICon();
+        CostLabelUpdate();
     }
     
     //橋の位置を動かす
@@ -110,38 +103,31 @@ public class CreateDirector : MonoBehaviour {
     }
 
     //UI変更
-    public void UICon() {
+    public void CostLabelUpdate() {
         costLabel.GetComponent<Text>().text = "cost : " + cost.ToString("D4"); 
-    }
-
-    //シーン変更
-    public void GoOtherScene(string nextSceneName) {
-        if (nextSceneName == "PlayScene") {
-            state = 0;
-        } else if (nextSceneName == "TitleScene" || nextSceneName == "SelectScene" || nextSceneName == "CreateScene") {
-            state = 10;
-            Stage.transform.DetachChildren();
-        }
-        GetComponent<PrefabController>().savePrefab(Stage);
-        SceneManager.LoadScene(nextSceneName);
-    }
-    static public void cameTitleScene(int stagecost, string stagename) {
-        cost = stagecost;
-        cost_BackUp = cost;
-        stageName = stagename;
     }
 
     //buildState切り替え
     public void BuildStateChange(int num) {
         buildState = num;
-        if (state == 2) Destroy(bridge);
+        if (state == 1) Destroy(bridge);
         Reset();
     }
 
     //消しゴム機能
     public void Eraser(GameObject obj) {
-        Destroy(obj);
-         UICon();
-        
+        if (state == 0) {
+            cost += obj.GetComponent<Bridge>().haveCost;
+            Destroy(obj);
+            CostLabelUpdate();
+        }
+    }
+
+    //Play移行時
+    public void GoPlay() {
+        if (state == 1) {
+            Destroy(bridge);
+            Reset();
+        }
     }
 }

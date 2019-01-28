@@ -25,7 +25,7 @@ public class CreateController : MonoBehaviour {
                 if (obj.tag == "Point" || obj.tag == "Ground") {
                     GetComponent<CreateDirector>().Click(obj);
                 }
-            } else if (CreateDirector.state == 2) {
+            } else if (CreateDirector.state == 1) {
                 GetComponent<CreateDirector>().Click(null);
             }
         }
