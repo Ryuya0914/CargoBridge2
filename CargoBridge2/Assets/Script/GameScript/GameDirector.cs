@@ -49,7 +49,13 @@ public class GameDirector : MonoBehaviour {
 
     //FadeInOut
     IEnumerator Fade() {
-        yield break;
+        float Gage = 0f;
+        while (true) {
+            Gage += Time.deltaTime;
+
+            if (Gage > 10f) yield break;
+            yield return null;
+        }
     }
 
     //StageSelectからステージの情報を受け取る
