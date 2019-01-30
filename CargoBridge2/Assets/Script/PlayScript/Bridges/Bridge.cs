@@ -10,7 +10,6 @@ public class Bridge : MonoBehaviour {
     public float maxLength = 0;
     public int cost = 0;
     float length = 0;
-    public List<GameObject> connectedPoint;
     public Color _color;
     public int haveCost = 0;
 
@@ -18,6 +17,7 @@ public class Bridge : MonoBehaviour {
 
     void Start() {
         createRoot = GameObject.Find("CreateRoot");
+        if (GameDirector.GameState == 1) Invoke("ObjectModeChange", 1.8f);
     }
 
     //当たり判定や重力の変更
@@ -57,15 +57,9 @@ public class Bridge : MonoBehaviour {
     }
 
     public void Cargo(GameObject obj1, GameObject obj2) {
-        connectedPoint.Add(obj1);
-        connectedPoint.Add(obj2);
+        Move(obj1.transform.position, obj2.transform.position);
         haveCost = (int)(length * cost);
         CreateDirector.cost -= haveCost;
         GetComponent<SpriteRenderer>().color = _color;
     }
-
-    void OnDestroy() {
-        CreateDirector.cost += haveCost;
-    }
-
 }

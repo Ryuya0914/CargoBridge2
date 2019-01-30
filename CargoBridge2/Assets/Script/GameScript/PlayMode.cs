@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayDirector : MonoBehaviour {
+public class PlayMode : MonoBehaviour {
 
 }
