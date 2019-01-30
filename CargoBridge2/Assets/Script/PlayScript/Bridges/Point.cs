@@ -10,7 +10,7 @@ public class Point : MonoBehaviour {
     void Start() {
         Joints = GetComponents<HingeJoint2D>();
         if (GameDirector.GameState == 0) CheckFlag = true;
-        else if (GameDirector.GameState == 1) Invoke("PlayMode", 3.0f);
+        else if (GameDirector.GameState == 1) Invoke("PlayMode", 2.0f);
     }
 
     void Update() {

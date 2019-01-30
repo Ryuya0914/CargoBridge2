@@ -17,7 +17,7 @@ public class Bridge : MonoBehaviour {
 
     void Start() {
         createRoot = GameObject.Find("CreateRoot");
-        if (GameDirector.GameState == 1) Invoke("ObjectModeChange", 1.5f);
+        if (GameDirector.GameState == 1) Invoke("ObjectModeChange", 1.8f);
     }
 
     //当たり判定や重力の変更

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameDirector : MonoBehaviour {
     public GameObject CreateSet, PlaySet, Bridge, CroneBridge;
     static public int cost = 3000;
     static public string stageName = "01";
     static public int GameState = 0;
+    public GameObject LoadUI;
+    public GameObject LoadBar;
 
     void Start() {
         StartCoroutine(Fade());
@@ -49,11 +52,17 @@ public class GameDirector : MonoBehaviour {
 
     //FadeInOut
     IEnumerator Fade() {
+        LoadUI.SetActive(true);
         float Gage = 0f;
+        Image Bar = LoadBar.GetComponent<Image>();
+
         while (true) {
             Gage += Time.deltaTime;
-
-            if (Gage > 10f) yield break;
+            Bar.fillAmount = Gage / 1.5f;
+            if (Bar.fillAmount >= 1f) {
+                LoadUI.SetActive(false);
+                yield break;
+            }
             yield return null;
         }
     }

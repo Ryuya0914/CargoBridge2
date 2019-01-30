@@ -10,6 +10,7 @@ TagManager:
   - Wood
   - player
   - fruit
+  - Load
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - fruit
   - child fruit
   - Ground
-  - 
+  - RayCatch
   - 
   - 
   - 

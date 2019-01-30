@@ -6,9 +6,28 @@ public class CameraController : MonoBehaviour {
     float cameraSize = 5;
     float MaxCameraSize;
     float Top, Bottom, Right, Left;
+    Vector3 backMouseScreenPos = new Vector3(0, 0, 0); //1フレーム前のマウスの位置
+
 
     void Start() {
-        Invoke("CameraSet", 2.0f);
+        Invoke("CameraSet", 1.3f);
+    }
+    
+    void Update() {
+        //マウス位置取得
+        Vector3 nowMouseScreenPos = Input.mousePosition;
+        //マウスのホイール入力値取得
+        float wheelScroll = Input.GetAxis("Mouse ScrollWheel");
+
+        //ホイールクリック
+        if (Input.GetMouseButton(2)) {
+            Move(backMouseScreenPos - nowMouseScreenPos);
+        }
+        //ホイールスクロール
+        if (wheelScroll != 0) {
+            Zoom(wheelScroll);
+        }
+        backMouseScreenPos = nowMouseScreenPos;
     }
 
     void CameraSet() {
