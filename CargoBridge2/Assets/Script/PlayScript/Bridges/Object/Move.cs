@@ -20,8 +20,8 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playFlag)
-        {
+        //if (playFlag)
+        //{
             if (stop)
             {
                 if (move != 0)
@@ -35,7 +35,7 @@ public class Move : MonoBehaviour
                 rb.velocity = new Vector2(Mathf.Max(-3, (Mathf.Min(3, rb.velocity.x))), rb.velocity.y);
 
             }
-        }
+        //}
         
 
     }

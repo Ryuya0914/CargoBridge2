@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class Warp : MonoBehaviour {
 
-    public Transform worpPoint;
+    public GameObject warpPoint;
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if(col.tag == "player")
-        {
-            //col.GetComponent<>
-        }
-    }
+    
 	// Use this for initialization
 	void Start () {
 		
@@ -22,4 +16,11 @@ public class Warp : MonoBehaviour {
 	void Update () {
 		
 	}
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "player")
+        {
+            col.gameObject.transform.position = warpPoint.transform.position;
+        }
+    }
 }
