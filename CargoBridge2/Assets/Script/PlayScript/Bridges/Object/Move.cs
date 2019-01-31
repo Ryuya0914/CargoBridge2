@@ -4,24 +4,32 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
+    public GameObject connect = null;
     public  bool stop = true;
     bool playFlag = false;
     public int move = 0;
     private Vector2 m_moveDirection = Vector2.right;
-
-
+    
     // Use this for initialization
     void Start()
     {
         if (GameDirector.GameState == 1)
+        {
             playFlag = true;
+            Invoke("ObjectModeChange", 1.8f);
+        }
+    }
+    public void ObjectModeChange()
+    {
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (playFlag)
-        //{
+        if (playFlag)
+        {
             if (stop)
             {
                 if (move != 0)
@@ -35,20 +43,16 @@ public class Move : MonoBehaviour
                 rb.velocity = new Vector2(Mathf.Max(-3, (Mathf.Min(3, rb.velocity.x))), rb.velocity.y);
 
             }
-        //}
+        }
         
 
     }
 
-    //void OnCollisionStay2D(Collision2D i_collision)
-    //{
-
-    //    var normal = i_collision.contacts[0].normal;
-
-    //    Vector2 dir = m_moveDirection - Vector2.Dot(m_moveDirection, normal) * normal;
-    //    m_moveDirection = dir.normalized;
-    //    Debug.Log(normal);
-    //    Debug.Log(dir);
-
-    //}
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag == "fruit")
+        {
+            connect = col.gameObject;
+        }
+    }
 }

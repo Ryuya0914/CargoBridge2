@@ -5,6 +5,7 @@ using UnityEngine;
 public class Cargo : MonoBehaviour {
     bool hit = true;
     bool playFalg = false;
+    public bool connect=false;
     void Start()
     {
         if (GameDirector.GameState == 1)
@@ -23,21 +24,16 @@ public class Cargo : MonoBehaviour {
         {
             if (hit && col.gameObject.tag == "player")
             {
-
-
-                //if(col.gameObject.GetComponent<DistanceJoint2D>().enabled==false)
-                //{
-                //    col.gameObject.GetComponent<DistanceJoint2D>().enabled = true;
-                //    col.gameObject.GetComponent<DistanceJoint2D>().connectedBody = transform.parent.GetComponent<Rigidbody2D>();
-                //}
-                if (col.gameObject.GetComponent<HingeJoint2D>().enabled == false)
+                if (col.gameObject.GetComponent<HingeJoint2D>().enabled == false&&connect==false)
                 {
                     col.gameObject.GetComponent<HingeJoint2D>().enabled = true;
                     col.gameObject.GetComponent<HingeJoint2D>().connectedBody = transform.parent.GetComponent<Rigidbody2D>();
+                    connect = true;
+                    transform.parent.transform.parent = col.transform.parent;
                 }
 
             }
         }
-       
+
     }
 }
