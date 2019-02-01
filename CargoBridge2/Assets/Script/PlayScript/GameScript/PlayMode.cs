@@ -8,6 +8,10 @@ public class PlayMode : MonoBehaviour {
     [SerializeField] Color _color = new Color(1f, 1f, 1f, 1f);
 
     void Start() {
+        Invoke("ModeChange", 1f);
+        
+    }
+    void ModeChange() {
         if (GameDirector.GameState == 1) {
             GetComponent<SpriteRenderer>().sprite = Texture;
             GetComponent<SpriteRenderer>().color = _color;

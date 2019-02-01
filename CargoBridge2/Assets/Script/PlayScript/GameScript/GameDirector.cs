@@ -12,6 +12,10 @@ public class GameDirector : PlaySE {
     public GameObject LoadUI;
     public GameObject LoadBar;
 
+    void Awake() {
+        GameState = 0;
+    }
+
     void Start() {
         StartCoroutine(Fade());
         GetComponent<PrefabController>().loadPrefab(stageName, Bridge);
@@ -46,8 +50,8 @@ public class GameDirector : PlaySE {
     //Playをリスタート
     public void ReStart() {
         StartCoroutine(Fade());
-        Destroy(CroneBridge.transform.GetChild(0));
-        Instantiate(Bridge.transform.GetChild(0), CroneBridge.transform);
+        Destroy(CroneBridge.transform.GetChild(0).gameObject);
+        Instantiate(Bridge.gameObject, CroneBridge.transform);
     }
 
     //FadeInOut
