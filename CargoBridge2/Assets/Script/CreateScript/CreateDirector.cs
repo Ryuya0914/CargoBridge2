@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 //TitleからstateName, cost
 //Play のとき start()にloadPrefab("00")
 
-public class CreateDirector : MonoBehaviour {
+public class CreateDirector : PlaySE {
     static public int cost = 10000;
     static public int state = 0;   //0 始点決定前、　1 始点決定後
     static public int buildState = 0; //0 wolk, 1 wood 
@@ -48,6 +48,7 @@ public class CreateDirector : MonoBehaviour {
         } else if (state == 1) {
 
             if (obj == point1) {        //終点が始点と同じところを指定された時
+                PlayAudio(1);
                 Destroy(bridge);
                 Reset();
             } else {                    //終点が違うpointを指定された時
@@ -59,6 +60,7 @@ public class CreateDirector : MonoBehaviour {
                 } else {   //終点がなにもないところを指定された時
                     Vector2 pointPos = MoveBridge();
                     if (pointPos.x >= 20) {
+                        PlayAudio(1);
                         Destroy(bridge);
                         Reset();
                     } else {
@@ -84,6 +86,7 @@ public class CreateDirector : MonoBehaviour {
 
     //橋をpointに固定する
     void Connection() {
+        PlayAudio(0);
         state = 0;
         bridge.GetComponent<Bridge>().Cargo(point1, point2);
         point1.GetComponent<Point>().ConnectionBridge(bridge);
@@ -117,6 +120,7 @@ public class CreateDirector : MonoBehaviour {
     //消しゴム機能
     public void Eraser(GameObject obj) {
         if (state == 0) {
+            PlayAudio(2);
             cost += obj.GetComponent<Bridge>().haveCost;
             Destroy(obj);
             CostLabelUpdate();

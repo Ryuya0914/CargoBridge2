@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour {
     float MaxCameraSize;
     float Top, Bottom, Right, Left;
     Vector3 backMouseScreenPos = new Vector3(0, 0, 0); //1フレーム前のマウスの位置
+    [SerializeField]AudioSource audioSource;
 
 
     void Start() {
@@ -69,4 +70,11 @@ public class CameraController : MonoBehaviour {
         GetComponent<Camera>().orthographicSize = cameraSize;
         PosSet();
     } 
+
+    //SEの再生
+    public void SoundPlay(AudioClip SE) {
+        audioSource.clip = SE;
+        audioSource.Play();
+    }
+
 }

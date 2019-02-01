@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameDirector : MonoBehaviour {
+public class GameDirector : PlaySE {
     public GameObject CreateSet, PlaySet, Bridge, CroneBridge;
     static public int cost = 3000;
     static public string stageName = "01";
@@ -55,6 +55,8 @@ public class GameDirector : MonoBehaviour {
         LoadUI.SetActive(true);
         float Gage = 0f;
         Image Bar = LoadBar.GetComponent<Image>();
+
+        PlayAudio(0);
 
         while (true) {
             Gage += Time.deltaTime;

@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4862958468504546}
   - component: {fileID: 212901864847957412}
   - component: {fileID: 61539354060367246}
+  - component: {fileID: 114437654210331124}
   m_Layer: 15
   m_Name: Stage000
   m_TagString: Untagged
@@ -66,6 +67,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.0419555, y: 3.4575095}
   m_EdgeRadius: 0
+--- !u!114 &114437654210331124
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1530952575321878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37e772bd7cba30f409984fa643ec9ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Texture: {fileID: 21300000, guid: 534ff43c51a2368428194bda141c32f9, type: 3}
 --- !u!212 &212901864847957412
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -100,7 +113,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 534ff43c51a2368428194bda141c32f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: df14188b1652ff14dadfbc2beb1cbd94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
