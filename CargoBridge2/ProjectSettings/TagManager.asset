@@ -11,6 +11,7 @@ TagManager:
   - player
   - fruit
   - Load
+  - Grass
   layers:
   - Default
   - TransparentFX
