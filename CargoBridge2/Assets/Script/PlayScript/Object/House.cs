@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class House : MonoBehaviour {
 
     public GameObject clear;
-    
+    bool playFalg = false;
 	// Use this for initialization
 	void Start () {
         clear.SetActive(false);
+        if (GameDirector.GameState == 1)
+            playFalg = true;
     }
 	
 	// Update is called once per frame
@@ -19,20 +21,23 @@ public class House : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.tag== "fruit")
+        if (playFalg)
         {
-            
-            Destroy(col.gameObject);
-            GameObject[] list = GameObject.FindGameObjectsWithTag("fruit");
-            Debug.Log(list.Length);
-            if(list.Length <= 1)
+            if (col.gameObject.tag == "fruit")
             {
-                Debug.Log("クリア！！！");
-                clear.SetActive(true);
-                GameObject[] player = GameObject.FindGameObjectsWithTag("player");
-                foreach(GameObject obj in player)
+
+                Destroy(col.gameObject);
+                GameObject[] list = GameObject.FindGameObjectsWithTag("fruit");
+                Debug.Log(list.Length);
+                if (list.Length <= 1)
                 {
-                    obj.GetComponent<Move>().stop = false;
+                    Debug.Log("クリア！！！");
+                    clear.SetActive(true);
+                    GameObject[] player = GameObject.FindGameObjectsWithTag("player");
+                    foreach (GameObject obj in player)
+                    {
+                        obj.GetComponent<Move>().stop = false;
+                    }
                 }
             }
         }
