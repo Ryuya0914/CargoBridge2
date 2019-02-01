@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour {
     //カメラの移動
     public void Move(Vector3 moveVec) {
         moveVec.z = 0;
-        Vector3 newPos = transform.position + moveVec / 15f;
+        Vector3 newPos = transform.position + moveVec / 40f;
         transform.position = newPos;
         PosSet();
     }

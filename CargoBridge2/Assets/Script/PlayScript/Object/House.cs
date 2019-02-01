@@ -9,7 +9,6 @@ public class House : MonoBehaviour {
     bool playFalg = false;
 	// Use this for initialization
 	void Start () {
-        clear.SetActive(false);
         if (GameDirector.GameState == 1)
             playFalg = true;
     }
